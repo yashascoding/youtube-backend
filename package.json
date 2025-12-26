@@ -2,10 +2,11 @@
   "name": "backend_hitesh_choudhary",
   "version": "1.0.0",
   "main": "index.js",
+  "type":"module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --experimental-json-modules src/index.js"
   },
-  "author": "",
+  "author": "yashas",
   "license": "ISC",
   "description": "",
   "devDependencies": {

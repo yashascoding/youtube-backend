@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
+import ConnectDB from "./db/index.js"
+import dotenv from "dotenv"
 
-(async ()=>{
-    try {
-        await mongoose.connect(`${}`)
-    } catch (error) {
-        
-    }
-})()
+dotenv.config({
+    path:'./.env'
+});
+
+ConnectDB()
+
