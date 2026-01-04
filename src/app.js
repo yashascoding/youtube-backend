@@ -12,12 +12,20 @@ import { errorHandler, notFound } from "./middlewares/errorHandler.js"
 
 //this is for frontend and backend communication
 const app = express();
-app.use(cors(
-    {
-        origin: process.env.CORS_ORIGIN || "http://localhost:3000", //allowed path 
-        credentials: true   //allow cookies jwt and sessions 
-    }
-))
+
+// Configure CORS to handle multiple origins
+const corsOrigins = (process.env.CORS_ORIGIN || "http://localhost:3000").split(",").map(origin => origin.trim());
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || corsOrigins.includes(origin)) {
+            callback(null, true)
+        } else {
+            callback(new Error("Not allowed by CORS"))
+        }
+    },
+    credentials: true   //allow cookies jwt and sessions 
+}))
 
 app.use(express.json({ limit: "16kb" }))//this is to read json data sent from client to server but limited to 16 kb 
 app.use(express.urlencoded({ extended: true }))//this is for parsing form data

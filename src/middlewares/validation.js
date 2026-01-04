@@ -1,5 +1,5 @@
 import { body, validationResult } from "express-validator";
-import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 
 export const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
@@ -8,7 +8,9 @@ export const handleValidationErrors = (req, res, next) => {
       field: error.param,
       message: error.msg,
     }));
-    throw new ApiError(400, "Validation failed", formattedErrors);
+    return res.status(400).json(
+      new ApiResponse(400, formattedErrors, "Validation failed")
+    );
   }
   next();
 };
